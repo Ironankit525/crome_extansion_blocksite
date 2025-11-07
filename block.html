@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Site Blocked - Work Mode</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 600px;
+      border: 4px solid #ff0000;
+      padding: 60px 40px;
+      background: #000;
+    }
+
+    .icon {
+      font-size: 120px;
+      margin-bottom: 30px;
+      color: #ff0000;
+    }
+
+    h1 {
+      font-size: 48px;
+      color: #ff0000;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+    }
+
+    p {
+      font-size: 24px;
+      color: #fff;
+      margin-bottom: 40px;
+      line-height: 1.5;
+    }
+
+    .message {
+      padding: 20px;
+      background: #1a1a1a;
+      border: 2px solid #fff;
+      margin-bottom: 30px;
+    }
+
+    .timer {
+      font-size: 36px;
+      color: #ff0000;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 15px 40px;
+      background: #ff0000;
+      color: #000;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 18px;
+      transition: all 0.3s;
+      margin: 10px;
+    }
+
+    button:hover {
+      background: #fff;
+    }
+
+    .back-btn {
+      background: #fff;
+    }
+
+    .back-btn:hover {
+      background: #ff0000;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">⛔</div>
+    <h1>SITE BLOCKED</h1>
+    <div class="message">
+      <p>This website is blocked during Work Mode</p>
+      <p style="font-size: 18px; color: #666;">Stay focused on your goals</p>
+    </div>
+    <div class="timer" id="remainingTime"></div>
+    <div>
+      <button class="back-btn" onclick="history.back()">GO BACK</button>
+      <button onclick="window.close()">CLOSE TAB</button>
+    </div>
+  </div>
+
+  <script>
+    // Show remaining time
+    function updateTimer() {
+      chrome.storage.local.get(['timeRemaining', 'workModeActive'], (data) => {
+        if (data.workModeActive && data.timeRemaining) {
+          const mins = Math.floor(data.timeRemaining / 60);
+          const secs = data.timeRemaining % 60;
+          document.getElementById('remainingTime').textContent = 
+            `Time remaining: ${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        } else {
+          document.getElementById('remainingTime').textContent = 'Work mode ended';
+        }
+      });
+    }
+
+    updateTimer();
+    setInterval(updateTimer, 1000);
+
+    // Listen for work mode changes
+    chrome.runtime.onMessage.addListener((message) => {
+      if (message.action === 'workModeEnded') {
+        document.getElementById('remainingTime').textContent = 'Work mode ended - You can close this tab';
+      }
+    });
+  </script>
+</body>
+</html>

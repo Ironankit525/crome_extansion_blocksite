@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 350px;
+      background: #000;
+      color: #fff;
+      font-family: 'Arial', sans-serif;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #ff0000;
+    }
+
+    h1 {
+      color: #ff0000;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 5px 15px;
+      background: #1a1a1a;
+      border: 2px solid #ff0000;
+      border-radius: 0;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    .status.active {
+      background: #ff0000;
+      color: #000;
+      font-weight: bold;
+    }
+
+    .timer-section {
+      margin: 20px 0;
+      padding: 15px;
+      background: #1a1a1a;
+      border: 2px solid #fff;
+    }
+
+    .timer-display {
+      font-size: 36px;
+      text-align: center;
+      color: #ff0000;
+      margin: 15px 0;
+      font-weight: bold;
+    }
+
+    .timer-controls {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    input[type="number"] {
+      flex: 1;
+      padding: 10px;
+      background: #000;
+      border: 2px solid #fff;
+      color: #fff;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: #ff0000;
+      color: #000;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background: #fff;
+    }
+
+    button.secondary {
+      background: #fff;
+      color: #000;
+    }
+
+    button.secondary:hover {
+      background: #ff0000;
+    }
+
+    .add-section {
+      margin: 20px 0;
+      padding: 15px;
+      background: #1a1a1a;
+      border: 2px solid #fff;
+    }
+
+    .add-section h3 {
+      color: #ff0000;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      background: #000;
+      border: 2px solid #fff;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    input[type="text"]::placeholder {
+      color: #666;
+    }
+
+    .blocked-list {
+      margin-top: 20px;
+    }
+
+    .blocked-list h3 {
+      color: #ff0000;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .site-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      background: #1a1a1a;
+      border: 2px solid #fff;
+      margin-bottom: 5px;
+    }
+
+    .site-name {
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .remove-btn {
+      padding: 5px 10px;
+      font-size: 12px;
+      background: #ff0000;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>WORK MODE</h1>
+    <div class="status" id="modeStatus">INACTIVE</div>
+  </div>
+
+  <div class="timer-section">
+    <div class="timer-display" id="timerDisplay">00:00</div>
+    <div class="input-group">
+      <input type="number" id="minutesInput" placeholder="Minutes" min="1" max="999" value="25">
+    </div>
+    <div class="timer-controls">
+      <button id="startBtn" class="secondary">START</button>
+      <button id="stopBtn">STOP</button>
+    </div>
+  </div>
+
+  <div class="add-section">
+    <h3>BLOCK WEBSITE</h3>
+    <div class="input-group">
+      <input type="text" id="websiteInput" placeholder="e.g., youtube.com">
+      <button id="addBtn">ADD</button>
+    </div>
+  </div>
+
+  <div class="blocked-list">
+    <h3>BLOCKED SITES</h3>
+    <div id="sitesList"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
